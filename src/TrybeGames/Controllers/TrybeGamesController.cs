@@ -120,7 +120,7 @@ public class TrybeGamesController
         }
     }
 
-    // 1.Crie a funcionalidde para adicionar uma nova pessoa jogadora ao banco de dados
+    // Adiciona uma nova pessoa jogadora ao banco de dados
     public void AddPlayer()
     {
         Console.WriteLine("Digite o seu nome:");
@@ -136,10 +136,10 @@ public class TrybeGamesController
         database.Players.Add(newPlayer);
     }
 
-    // 2. Crie a funcionalidade de adicionar um novo estúdio de jogos ao banco de dados
+    // Adiciona um novo estúdio de jogos ao banco de dados
     public void AddGameStudio()
     {
-        Console.WriteLine("Digite o nome do estúdio de jogos:");
+        Console.WriteLine("Insira o nome do estúdio de jogos:");
         string studioName = Console.ReadLine();
         int newId = database.GameStudios.Count + 1;
 
@@ -152,11 +152,32 @@ public class TrybeGamesController
         database.GameStudios.Add(gameStudio);
     }
 
-    // 3. Crie a funcionalidade de adicionar novo Jogo ao Banco de dados
+    // Adiciona um novo Jogo ao Banco de dados
     public void AddGame()
     {
-        // implementar
-        Console.WriteLine("Ainda não é possível realizar essa funcionalidade!");
+        Console.WriteLine("Insira o nome do jogo:");
+        string gameName = Console.ReadLine();
+
+        Console.WriteLine("Insira a data de lançamento:");
+        var releaseDate = DateTime.ParseExact(
+            Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture
+            );
+    
+        Console.WriteLine("Qual o gênero do jogo?");
+        PrintGameTypes();
+        GameType type = (GameType)Enum.Parse(typeof(GameType), Console.ReadLine());
+        
+        int newId = database.GameStudios.Count + 1;
+
+        Game newGame = new()
+        {
+            Id = newId,
+            Name = gameName,
+            ReleaseDate = releaseDate,
+            GameType = type,
+        };
+
+        database.Games.Add(newGame);
     }
 
     public void ChangeGameStudio(Game game)
