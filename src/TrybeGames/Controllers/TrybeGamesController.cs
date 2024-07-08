@@ -165,7 +165,7 @@ public class TrybeGamesController
     
         Console.WriteLine("Qual o gênero do jogo?");
         PrintGameTypes();
-        GameType type = (GameType)Enum.Parse(typeof(GameType), Console.ReadLine());
+        GameType type = (GameType)Enum.Parse(typeof(GameType), Console.ReadLine(), true);
         
         int newId = database.GameStudios.Count + 1;
 
