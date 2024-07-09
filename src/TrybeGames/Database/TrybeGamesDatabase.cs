@@ -52,15 +52,31 @@ public class TrybeGamesDatabase
     {
         var gameTypes = from game in Games
                         select game.GameType;
-        
+
         return gameTypes.Distinct().ToList();
     }
 
     // 9. Crie a funcionalidade de buscar todos os estúdios de jogos junto dos seus jogos desenvolvidos com suas pessoas jogadoras
     public List<StudioGamesPlayers> GetStudiosWithGamesAndPlayers()
     {
-        // Implementar
-        throw new NotImplementedException();
+        var gameplayers = Games.Select(game => new GamePlayer
+        {
+            GameName = game.Name,
+            Players = Players.Where(
+                player => player.GamesOwned.Contains(game.Id)
+                ).ToList()
+        }).ToList();
+
+        var studioGamesPlayers = GameStudios.Select(
+            studio => new StudioGamesPlayers
+            {
+                GameStudioName = studio.Name,
+                Games = gameplayers.Where(gp => Games.Any(
+                    game => game.DeveloperStudio == studio.Id && game.Name == gp.GameName))
+                    .ToList()
+            });
+
+        return studioGamesPlayers.ToList();
     }
 
 }
